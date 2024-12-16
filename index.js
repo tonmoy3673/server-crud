@@ -27,12 +27,14 @@ async function run() {
     // Connect the client to the server	(optional starting in v4.7)
     await client.connect();
     console.log("Server successfully connected to MongoDB!");
+
+    const userCollection= client.db('userDB').collection('allUsers');
     
 // ========= post api ============//
 app.post('/users', async(req,res)=>{
   const user = req.body;
-  console.log(user);
-  res.send(user)
+  const result = await userCollection.insertOne(user)
+  res.send(result)
 })
 
 
